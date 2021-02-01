@@ -1,0 +1,15 @@
+.contain-to-grid {
+    background: #842a4b;
+}
+
+.top-bar {
+    background: #842a4b;
+}
+
+.top-bar-section li a:not(.button) {
+    background: #40004c;
+}
+
+.hero {
+    background: #b7a507;
+}

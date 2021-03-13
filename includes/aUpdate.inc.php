@@ -7,11 +7,10 @@ if (isset($_POST['admin-submit'])) {
   $email = $_POST['email'];
   $rol = $_POST['Rol'];
 
-
-  $stmt = mysqli_stmt_init($conn);
   $sql = "UPDATE users SET Rol = '$rol' WHERE Email = '$email' ;";
+  $stmt = $pdo->prepare($sql);
   //$sql = "UPDATE users SET `Voornaam` = '?', `Achternaam` = '?', `Email` = '?', `School` = '?', `Telefoonnummer` = '?' WHERE `users`.`ID` = $currentUser";
-  if (!mysqli_stmt_prepare($stmt, $sql)) {
+  if (!$pdo->prepare($sql)) {
 
 
     header("Location: ../sites/user.php?error=sqlerror");
@@ -23,7 +22,7 @@ if (isset($_POST['admin-submit'])) {
 
 
   }else {
-    mysqli_stmt_execute($stmt);
+    $stmt->execute();
     header("Location: ../sites/dashboard.php?succes=Succesfull");
     exit();
   }

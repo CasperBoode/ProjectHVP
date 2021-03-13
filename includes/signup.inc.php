@@ -13,7 +13,7 @@ if (isset($_POST['signup-submit'])) {
   $phone = $_POST['phone'];
   $bDay = $_POST['bDay'];
   $gast = "Gast";
-  $date = "2018-12-31 13:05:21";
+  $date = "2000-12-31 13:05:21";
 
 
 
@@ -28,32 +28,30 @@ if (isset($_POST['signup-submit'])) {
   else {
 
     $sql = "SELECT Email FROM users WHERE Email=?";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    $stmt = $pdo->prepare($sql);
+    if (!$pdo->prepare($sql)) {
       header("Location: ../sites/register.php?error=sqlerror1");
       exit();
     }
     else {
-      mysqli_stmt_bind_param($stmt, "s", $email);
-      mysqli_stmt_execute($stmt);
-      mysqli_stmt_store_result($stmt);
-      $resultCheck = mysqli_stmt_num_rows($stmt);
-      if ($resultCheck > 0) {
+      $stmt->execute(array($email));
+      $row_count = $stmt->rowCount();
+      if ($row_count > 0) {
         header("Location: ../sites/register.php?error=emailTaken&email=".$email);
         exit();
       }
       else {
         $sql = "INSERT INTO users (Voornaam, Achternaam, Email, School, Telefoonnummer, Geboortedatum, wachtwoord, rol, date_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
-        $stmt = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $stmt = $pdo->prepare($sql);
+        if (!$pdo->prepare($sql)) {
           header("Location: ../sites/register.php?error=sqlerror2");
           exit();
         }
         else {
           $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-          mysqli_stmt_bind_param($stmt, "sssssssss", $name, $aName, $email, $school, $phone, $bDay, $hashedPwd, $gast, $date);
-          mysqli_stmt_execute($stmt);
+
+          $stmt->execute(array($name, $aName, $email, $school, $phone, $bDay, $hashedPwd, $gast, $date));
           header("Location: ../sites/login.php");
           exit();
 

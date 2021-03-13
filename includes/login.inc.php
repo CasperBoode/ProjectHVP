@@ -12,18 +12,15 @@ if (isset($_POST['login-submit'])) {
     exit();
   }
   else {
-    $sql = "SELECT * FROM users WHERE Email=?;";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE Email= '$email'");
+
+    if (!$stmt->execute()) {
       header("Location: ../sites/login.php?error=sqlerror");
       exit();
     }
     else {
-
-      mysqli_stmt_bind_param($stmt, "s", $email);
-      mysqli_stmt_execute($stmt);
-      $result = mysqli_stmt_get_result($stmt);
-      if ($row = mysqli_fetch_assoc($result)) {
+      if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $pwdCheck = password_verify($pwd, $row['wachtwoord']);
         if ($pwdCheck == false) {
           header("Location: ../sites/login.php?error=wrongpassword". $pwd);

@@ -91,12 +91,12 @@
   <div class="row content">
     <?php
     $sql = "SELECT * from aanbiedingen";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
+    $stmt = $pdo->query($sql);
+    $row_count = $stmt->rowCount();
+    if ($row_count > 0) {
         // output data of each row
-        $result = $conn->query($sql);
-      while($row = $result->fetch_assoc()) {
+        $result = $pdo->query($sql);
+      foreach($pdo->query($sql) as $row) {
       $prijs = $row["Prijs"];
       $id = $row["ID"];
       $aanbieding = $row["Aanbiedings_type"];

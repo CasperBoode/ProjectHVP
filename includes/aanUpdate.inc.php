@@ -8,11 +8,10 @@ if (isset($_POST['aanbieding-submit'])) {
   $aanbieding = $_POST['aanbieding'];
   $id = $_POST["id"];
 
-
-  $stmt = mysqli_stmt_init($conn);
   $sql = "UPDATE aanbiedingen SET prijs = '$prijs', Aanbiedings_type = '$aanbieding' WHERE id = '$id' ;";
+  $stmt = $pdo->prepare($sql);
   //$sql = "UPDATE users SET `Voornaam` = '?', `Achternaam` = '?', `Email` = '?', `School` = '?', `Telefoonnummer` = '?' WHERE `users`.`ID` = $currentUser";
-  if (!mysqli_stmt_prepare($stmt, $sql)) {
+  if (!$pdo->prepare($sql)) {
 
 
     header("Location: ../sites/aanbiedingen.php?error=sqlerror");
@@ -24,7 +23,7 @@ if (isset($_POST['aanbieding-submit'])) {
 
 
   }else {
-    mysqli_stmt_execute($stmt);
+    $stmt->execute();
     header("Location: ../sites/dashboard.php?succes=Succesfull");
     exit();
   }

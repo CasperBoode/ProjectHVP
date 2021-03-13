@@ -12,10 +12,13 @@ if (isset($_POST['user-submit'])) {
   session_start();
   $currentUser = $_SESSION['userID'];
 
-  $stmt = mysqli_stmt_init($conn);
+
+
+
   $sql = "UPDATE users SET Voornaam = '$name', Achternaam = '$aName', Email = '$email', School = '$school', Telefoonnummer = '$phone' WHERE id = '$currentUser' ;";
+  $stmt = $pdo->prepare($sql);
   //$sql = "UPDATE users SET `Voornaam` = '?', `Achternaam` = '?', `Email` = '?', `School` = '?', `Telefoonnummer` = '?' WHERE `users`.`ID` = $currentUser";
-  if (!mysqli_stmt_prepare($stmt, $sql)) {
+  if (!$pdo->prepare($sql)) {
 
 
     header("Location: ../sites/user.php?error=sqlerror" . $currentUser);
@@ -28,7 +31,7 @@ if (isset($_POST['user-submit'])) {
 
   }else {
 
-    mysqli_stmt_execute($stmt);
+    $stmt->execute();
     header("Location: ../sites/dashboard.php?succes=Succesfull");
     exit();
   }

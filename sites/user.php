@@ -84,13 +84,13 @@
   </nav>
 
   <?php
-  $sql = "SELECT * from users WHERE id = $loggedUser ";
-  $result = $conn->query($sql);
-
-  if ($result->num_rows > 0) {
+  $sql = "SELECT * from users WHERE id = '$loggedUser' ";
+  $stmt = $pdo->query($sql);
+  $row_count = $stmt->rowCount();
+  if ($row_count > 0) {
       // output data of each row
-      $result = $conn->query($sql);
-    while($row = $result->fetch_assoc()) {
+      $result = $pdo->query($sql);
+    foreach($pdo->query($sql) as $row) {
     $voornaam = $row["Voornaam"];
     $achternaam = $row["Achternaam"];
     $email = $row["Email"];
@@ -158,7 +158,7 @@
   </div>
 </div>
 <footer class="container-fluid text-center bg-dark">
-  <p>Copyright (c) 2020, Jarno en Collin</p>
+  <p>Copyright (c) 2021, BOICT1</p>
 </footer>
 
 </body>

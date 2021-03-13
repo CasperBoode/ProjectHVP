@@ -14,17 +14,15 @@
   $loggedUser = $_SESSION['userID'];
 
   $sql = "SELECT * from users where id = $loggedUser"; //where ID = session id
-  $stmt = mysqli_stmt_init($conn);
+  $index_stmt = $pdo->query($sql);
 
   $userID = $loggedUser;
-  setcookie("TestCookie", $userID);
+  setcookie("Cookie", $userID);
 
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
+$row_count = $index_stmt->rowCount();
+if ($row_count > 0) {
   // output data of each row
-  while($row = $result->fetch_assoc()) {
-
+  foreach($pdo->query($sql) as $row) {
 
 ?>
 
@@ -135,12 +133,15 @@ if ($result->num_rows > 0) {
        <p>Inventory</p>
        <p>
       <?php
-      $sql5 = "SELECT * from inventory JOIN aanbiedingen ON inventory.a_ID = aanbiedingen.ID WHERE u_ID = '$userID'  ;";
-      $result = $conn->query($sql);
-       if ($result->num_rows > 0) {
-           // output data of each row
-           $result = $conn->query($sql5);
-           while($row5 = $result->fetch_assoc()) {
+
+
+
+
+      $stmt5 = $pdo->prepare("SELECT * from inventory JOIN aanbiedingen ON inventory.a_ID = aanbiedingen.ID WHERE u_ID = ?");
+      $stmt5->execute(array($userID));
+      $row_count5 = $stmt5->rowCount();
+       if ($row_count5 > 0) {
+           while($row5 = $stmt5->fetch(PDO::FETCH_ASSOC)) {
              echo $row5["Aanbiedings_type"] . " aantal: " . $row5["hoeveelheid"] . "</br>";
             }
           }
@@ -326,25 +327,23 @@ $spinTime =  date("Y-m-d H:i:s", $oneday);
 
   if(isset($_GET["mis"])){
     $curTime = date("Y-m-d H:i:s");
-    $sql4 = "UPDATE users set date_time = '$curTime' where ID = '$loggedUser' ;";
-    mysqli_query($conn, $sql4);
-
-
+    $stmt4 = $pdo->prepare("UPDATE users set date_time = ? where ID = ?");
+    $stmt4->execute(array($curTime, $loggedUser));
   }
   elseif(isset($_GET["aanbieding"]) && ($_GET["aanbieding"] !== "mis") && ($row["Date_time"] <= $spinTime)){
 
-    // $somevar = $aanbiedingResult;
     $curTime = date("Y-m-d H:i:s");
     // invetory add
     $count = 0;
-    $aanbiedingCheckSql = "SELECT count(a_ID) FROM inventory where a_ID = $aanbiedingid;";
     ////$check = mysqli_query($conn, $aanbiedingCheckSql);
 
-    $result = $conn->query($aanbiedingCheckSql);
-    while($row34 = $result->fetch_assoc()) {
-      //$count = $row34["a_ID"];
-      $count = $row34["count(a_ID)"];
-    }
+    $stmt34 = $pdo->prepare("SELECT count(a_ID) FROM inventory where a_ID = ?");
+    $stmt34->execute(array($aanbiedingid));
+    $row_count34 = $stmt34->rowCount();
+     if ($row_count34 > 0) {
+         while($row34 = $stmt34->fetch(PDO::FETCH_ASSOC)) {
+           $count = $row34["count(a_ID)"];
+    }}
 
 
     // $row34 = $check->fetch_assoc();
@@ -352,13 +351,19 @@ $spinTime =  date("Y-m-d H:i:s", $oneday);
     ////echo $check->fetch_assoc()['a_ID'] . "eeeeeeeeeeeeeeeeeeee";
     echo $count;
     if($count >= 1){ //count(array)
-      $sql3 = "UPDATE inventory set hoeveelheid = hoeveelheid + 1 where u_ID = '$loggedUser' and a_ID = $aanbiedingid;";
+
+      $stmt3 = $pdo->prepare("UPDATE inventory set hoeveelheid = hoeveelheid + 1 where u_ID = ? and a_ID = ?;");
+
+
+      //$sql3 = "UPDATE inventory set hoeveelheid = hoeveelheid + 1 where u_ID = '$loggedUser' and a_ID = $aanbiedingid;";
   } else {
-      $sql3 = "INSERT INTO inventory (ID, u_ID, a_ID, aanbieding, hoeveelheid) VALUES (NULL, '$loggedUser', $aanbiedingid, (SELECT Aanbiedings_type FROM aanbiedingen WHERE ID = $aanbiedingid), '1');";
+      $stmt3 = $pdo->prepare("INSERT INTO inventory (ID, u_ID, a_ID, aanbieding, hoeveelheid) VALUES (NULL, ?, ?, (SELECT Aanbiedings_type FROM aanbiedingen WHERE ID = $aanbiedingid), '1');");
+      //$sql3 = "INSERT INTO inventory (ID, u_ID, a_ID, aanbieding, hoeveelheid) VALUES (NULL, '$loggedUser', $aanbiedingid, (SELECT Aanbiedings_type FROM aanbiedingen WHERE ID = $aanbiedingid), '1');";
   }
-    $sql4 = "UPDATE users set date_time = '$curTime' where ID = '$loggedUser' ;";
-    if (mysqli_query($conn, $sql3)) {
-        mysqli_query($conn, $sql4);
+    $stmt4 = $pdo->prepare("UPDATE users set date_time = ? where ID = ? ;");
+    //$sql4 = "UPDATE users set date_time = '$curTime' where ID = '$loggedUser' ;";
+    if ($stmt3->execute(array($loggedUser, $aanbiedingid))) { //$stmt3->execute(array($loggedUser, $aanbiedingid)); mysqli_query($conn, $sql3)
+        $stmt4->execute(array($curTime, $loggedUser));//mysqli_query($conn, $sql4);
         echo '<script>window.location="../sites/dashboard.php"</script>';
   } else
   {
@@ -380,11 +385,11 @@ $spinTime =  date("Y-m-d H:i:s", $oneday);
          <div class="well">
            <p>Evenementen</p>
            <p><?php
-           $sql1 = "SELECT * from evenement order by evenement_datum ";
-           if ($result->num_rows > 0) {
-               // output data of each row
-               $result = $conn->query($sql1);
-             while($row1 = $result->fetch_assoc()) {
+           $stmt1 = $pdo->prepare("SELECT * from evenement order by evenement_datum ");
+           $stmt1->execute();
+           $row_count1 = $stmt1->rowCount();
+            if ($row_count1 > 0) {
+                while($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
            echo $row1["Evenement_naam"] . " Datum: " . $row1["Evenement_datum"] . "</br>"; }?></p>
          </div>
        </div>
@@ -394,7 +399,7 @@ $spinTime =  date("Y-m-d H:i:s", $oneday);
 
 
   <footer class="container-fluid text-center bg-dark">
-   <p>Copyright &copy; 2020, Yarno en Collin</p>
+   <p>Copyright &copy; 2021, BOICT1</p>
 
  </footer>
 

@@ -90,12 +90,12 @@
   <div class="row content">
     <?php
     $sql = "SELECT * from users";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
+    $stmt= $pdo->query($sql);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $row_count = $stmt->rowCount();
+    if ($row_count > 0) {
         // output data of each row
-        $result = $conn->query($sql);
-      while($row = $result->fetch_assoc()) {
+      foreach($pdo->query($sql) as $row) {
       $rol = $row["rol"];
 
       $email = $row["Email"];

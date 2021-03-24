@@ -89,6 +89,9 @@ if ($row_count > 0) {
          <li class="nav-item ">
            <a class="nav-link" href="../index.php">Home </a>
          </li>
+         <li>
+           <a class="nav-link" href="reviews.php">Reviews </a>
+         </li>
         <?php if($row["rol"] == "Beheerder"){
             echo '<li class="nav-item ">
               <a class="nav-link" href="../sites/admin.php">Admin </a>

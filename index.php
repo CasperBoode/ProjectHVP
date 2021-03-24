@@ -7,7 +7,7 @@
   <ul class="title-area">
     <li class="name">
       <h1>
-        <a href="/dashboard/index.html">[LOGO]Het vliegende paard</a>
+        <a href="#">[LOGO]Het vliegende paard</a>
       </h1>
     </li>
       <li class="toggle-topbar menu-icon">
@@ -19,6 +19,9 @@
 
     <section class="top-bar-section">
       <ul class="right">
+        <li>
+          <a href="sites/reviews.php">Reviews</a>
+        </li>
         <li class="">
           <a href="sites/login.php">login</a>
         </li>

@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$db   = 'a';
+$db   = 'vliegendpaard';
 $user = 'root';//VP
 $pass = '';//VPProject!
 $charset = 'utf8mb4';

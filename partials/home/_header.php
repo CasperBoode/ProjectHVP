@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Use title if it's in the page YAML frontmatter -->
-    <title>Het vliegende peerdje</title>
+    <title>Het vliegende paard</title>
 
-    <meta name="description" content="Peerdje in gallop." />
+    <meta name="description" content="Het vliegende paard Zwolle" />
     <meta name="keywords" content="vliegende, paard" />
 
     <link href="/dashboard/stylesheets/normalize.css" rel="stylesheet" type="text/css" /><link href="/dashboard/stylesheets/all.css" rel="stylesheet" type="text/css" />

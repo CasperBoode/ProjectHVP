@@ -5,7 +5,11 @@
     exit();
   } else{
     $loggedUser = $_SESSION['userID'];
-  } ?>
+  }
+require '../includes/beheerderCheck.php';
+
+
+  ?>
 <!DOCTYPE html>
 <html lang="en"  style="height: 100vh;">
 <head>
@@ -70,6 +74,9 @@
         </li>
         <li class="nav-item ">
           <a class="nav-link" href="aanbiedingen.php">Aanbiedingen</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="evenementen.php">Evenementen</a>
         </li>
         <?php if (isset($_SESSION['userID'])) {
           echo '<form action="../includes/logout.inc.php" mehtod="GET">

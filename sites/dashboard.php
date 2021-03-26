@@ -388,7 +388,7 @@ $spinTime =  date("Y-m-d H:i:s", $oneday);
          <div class="well">
            <p>Evenementen</p>
            <p><?php
-           $stmt1 = $pdo->prepare("SELECT * from evenement order by evenement_datum ");
+           $stmt1 = $pdo->prepare("SELECT * from evenement order by evenement_datum desc limit 10;");
            $stmt1->execute();
            $row_count1 = $stmt1->rowCount();
             if ($row_count1 > 0) {

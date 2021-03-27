@@ -59,7 +59,7 @@ require '../includes/beheerderCheck.php';
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../sites/dashboard.php">Peerd</a>
+    <a class="navbar-brand" href="../sites/dashboard.php">Vliegend Paard</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -104,9 +104,12 @@ require '../includes/beheerderCheck.php';
         // output data of each row
       foreach($pdo->query($sql) as $row) {
       $rol = $row["rol"];
-
       $email = $row["Email"];
-
+	  $voornaam = $row["Voornaam"];
+	  $achternaam = $row["Achternaam"];
+	  $school = $row["School"];
+	  $geboortedatum = $row["Geboortedatum"];
+	  $telefoon = $row["Telefoonnummer"];
       //echo $email;
 
 
@@ -115,33 +118,69 @@ require '../includes/beheerderCheck.php';
     </div>
     <div class="col-sm-8 d-flex justify-content-center">
       <div class="col-sm-8 animate__animated animate__bounceInUp" style="margin-top:10%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-        <h1><?php echo $email ?> </h1>
-        <p>Pas hier je gegevens aan.</p>
-        <hr>
         <form action="../includes/aUpdate.inc.php" method="POST">
-          <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $email ?>" style="visibility: hidden; position: absolute;">
+          <div class="col-sm-12 ">
+            <label for="exampleInputEmail1">Email adress:</label>
+            <?php echo $email ?>
+			<input name="email" type="email" class="form-control" id="exampleInoutEmail1" value="<?php echo $email ?>" style="visibility: hidden; position: absolute;">
 
-          <div class="col-md-4 mb-3">
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="validationCustom01">Voornaam</label>
+            <input name="vnaam" type="text" class="form-control" id="validationCustom01" value="<?php echo $voornaam ?>">
+
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="validationCustom02">Achternaam</label>
+            <input name="anaam" type="text" class="form-control" id="validationCustom02" value="<?php echo $achternaam ?>">
+
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="validationCustom04">Telefoonnummer</label>
+            <input name="telefoon" type="text" class="form-control" id="validationCustom04" value="<?php echo $telefoon ?>">
+		
+          </div>
+		  <div class="col-md-3 mb-3">
+            <label for="validationCustom05">Geboortedatum</label>
+            <input name="gbdatum" type="date" class="form-control" id="validationCustom05" value="<?php echo $geboortedatum ?>">
+		
+          </div>
+          <div class="col-md-3 mb-3">
             <label for="validationCustom03">Rol</label>
             <!-- <input type="text" class="form-control" id="validationCustom03" placeholder="Adress" required> -->
-            <select name="Rol" id="validationCustom03" value="" >
-              <option
-                disabled="disabled" selected="selected" > <?php echo "$rol"; ?>
-              </option>
-              <optgroup label="Rollen">
+            <select name="rol" id="validationCustom03" value="<?php echo "$rol"; ?>" >
+			<option
+				selected="selected"> <?php echo "$rol"; ?>
+			</option>
               <option value="Beheerder">Beheerder</option>
               <option value="Gast">Gast</option>
-              <option value="Stagiar">Stagier</option>
+              <option value="Stagiar">Stagiar</option>
               <option value="Medewerker">Medewerker</option>
+            </select>
+
+          </div>
+		  <div class="col-md-3 mb-3">
+            <label for="validationCustom06">School</label>
+            <!-- <input type="text" class="form-control" id="validationCustom03" placeholder="Adress" required> -->
+            <select name="school" id="validationCustom06" value="<?php echo $school ?>">
+			<option
+				selected="selected"> <?php echo "$school"; ?>
+			</option>
+              <option value="Windesheim">Windesheim</option>
+              <option value="Stenden">Stenden</option>
+              <option value="Nog1">Nog een</option>
+              <option value="Nog2">Nog eentje</option>
             </select>
 
           </div>
 
           <div class="col-md-8 md-8 text-center">
             <button name="admin-submit" type="submit" class="btn btn-primary">Update</button>
-
-          </div>
+			</div>
           </form>
+<form action="../includes/aDelete.inc.php" method="POST">
+			<button name="admin-delete" type="submit" class="btn btn-primary" onclick="return confirm('Weet je het zeker?')">Delete</button>
+			</form>
       </div>
     </div>
     <div class="col-sm-2">

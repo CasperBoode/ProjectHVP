@@ -151,12 +151,17 @@ require '../includes/beheerderCheck.php';
     </div>
     <div class="col-sm-8 d-flex justify-content-center">
       <div class="col-sm-8 animate__animated animate__bounceInUp center-text" style="margin-top:10%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-      <form action="../includes/evenementUpdate.inc.php" method="POST">
+
+        <form action="../includes/evenementDelete.inc.php" method="POST">
+             <button name="evenementen-Delete" type="submit" class="btn btn-primary" style="background-color: red; border: 1px red; float: right; margin-top: 1%;" onclick="return confirm('<?php echo $naam ?> verwijderen?')">Delete</button>
+             <input name="id" type="text" class="form-control" id="id" value="<?php echo $id ?>" style="visibility: hidden; position: absolute;">
+        </form>
+
         <h1><?php echo $naam ?> </h1>
-        <p>Pas hier het evenement aan.</p><button name="evenementen-Delete" type="submit" class="btn btn-primary" style="background-color: red; border: 1px red">Delete</button>
+        <p>Pas hier het evenement aan.</p>
         <hr>
 
-
+        <form action="../includes/evenementUpdate.inc.php" method="POST">
 
           <input name="id" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $id ?>" style="visibility: hidden; position: absolute;">
 

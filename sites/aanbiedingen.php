@@ -117,7 +117,7 @@ require '../includes/beheerderCheck.php';
         <h1><?php echo $id ?> </h1>
         <p>Pas hier de gegevens aan.</p>
         <hr>
-        <form action="../includes/aanUpdate.inc.php" method="POST">
+        <form action="../includes/aanbiedingUpdate.inc.php" method="POST">
 
           <input name="id" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $id ?>" style="visibility: hidden; position: absolute;">
 

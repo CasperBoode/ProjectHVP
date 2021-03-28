@@ -15,7 +15,7 @@ if (isset($_POST['admin-submit'])) {
   $sql = "UPDATE users SET Voornaam = '$Voornaam', Achternaam = '$Achternaam', School = '$school', Geboortedatum = '$geboortedatum', Telefoonnummer = '$telefoon', Rol = '$rol'  WHERE Email = '$email' ;";
   $stmt = $pdo->prepare($sql);
   //$sql = "UPDATE users SET `Voornaam` = '?', `Achternaam` = '?', `Email` = '?', `School` = '?', `Telefoonnummer` = '?' WHERE `users`.`ID` = $currentUser";
-   
+
   if (!$pdo->prepare($sql)) {
 
 
@@ -23,17 +23,13 @@ if (isset($_POST['admin-submit'])) {
 
     exit();
 
-
-
-
-
   }else {
     $stmt->execute();
     header("Location: ../sites/dashboard.php?succes=Succesfull");
     exit();
   }
 
-}else {
+}else{
   header("Location: ../sites/user.php");
   exit();
 }

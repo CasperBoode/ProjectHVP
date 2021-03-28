@@ -118,7 +118,7 @@ require '../includes/beheerderCheck.php';
     </div>
     <div class="col-sm-8 d-flex justify-content-center">
       <div class="col-sm-8 animate__animated animate__bounceInUp" style="margin-top:10%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-        <form action="../includes/aUpdate.inc.php" method="POST">
+        <form action="../includes/adminUpdate.inc.php" method="POST">
           <div class="col-sm-12 ">
             <label for="exampleInputEmail1">Email adress:</label>
             <?php echo $email ?>
@@ -138,12 +138,12 @@ require '../includes/beheerderCheck.php';
           <div class="col-md-3 mb-3">
             <label for="validationCustom04">Telefoonnummer</label>
             <input name="telefoon" type="text" class="form-control" id="validationCustom04" value="<?php echo $telefoon ?>">
-		
+
           </div>
 		  <div class="col-md-3 mb-3">
             <label for="validationCustom05">Geboortedatum</label>
             <input name="gbdatum" type="date" class="form-control" id="validationCustom05" value="<?php echo $geboortedatum ?>">
-		
+
           </div>
           <div class="col-md-3 mb-3">
             <label for="validationCustom03">Rol</label>
@@ -168,8 +168,6 @@ require '../includes/beheerderCheck.php';
 			</option>
               <option value="Windesheim">Windesheim</option>
               <option value="Stenden">Stenden</option>
-              <option value="Nog1">Nog een</option>
-              <option value="Nog2">Nog eentje</option>
             </select>
 
           </div>
@@ -178,9 +176,10 @@ require '../includes/beheerderCheck.php';
             <button name="admin-submit" type="submit" class="btn btn-primary">Update</button>
 			</div>
           </form>
-<form action="../includes/aDelete.inc.php" method="POST">
-			<button name="admin-delete" type="submit" class="btn btn-primary" onclick="return confirm('Weet je het zeker?')">Delete</button>
-			</form>
+          <form action="../includes/adminDelete.inc.php" method="POST">
+			         <button name="admin-delete" type="submit" class="btn btn-primary" onclick="return confirm('Weet je het zeker?')">Delete</button>
+               <input name="email" type="email" class="form-control" id="exampleInoutEmail1" value="<?php echo $email ?>" style="visibility: hidden; position: absolute;">
+			    </form>
       </div>
     </div>
     <div class="col-sm-2">

@@ -110,7 +110,7 @@
         <h1>Gegevens aanpassen </h1>
         <p>Pas hier je gegevens aan.</p>
         <hr>
-        <form action="../includes/uUpdate.inc.php" method="POST">
+        <form action="../includes/userUpdate.inc.php" method="POST">
           <div class="form-group">
             <label for="exampleInputEmail1">Email adress</label>
             <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $email ?>">

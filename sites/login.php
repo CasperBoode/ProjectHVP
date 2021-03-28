@@ -8,7 +8,7 @@
     <div class="col-sm-2">
     </div>
     <div class="col-sm-8 d-flex justify-content-center">
-      <div class="col-sm-4 animate__animated animate__bounceInUp card" style="margin-top:20%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <div class="col-sm-4 animate__animated animate__bounceInUp card login_card" >
         <h1>Login</h1>
         <p>Vul hier je email adress en wachtwoord in om in te kunnen loggen.</p>
         <hr>
